@@ -1,87 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>DVD Screensaver</title>
+    <title>Screensaver</title>
     <style>
-        html, body {
+         html, body {
+            background-color: #111;
             margin: 0;
             padding: 0;
-            overflow: hidden;
-            background-color: #000;
             width: 100%;
             height: 100%;
         }
     </style>
+    <script src="player-loading.js" type="module"></script>
+    <script type="module">
+        import { BouncingScreensaver } from './player-loading.js';
+        window.BouncingScreensaver = BouncingScreensaver;
+    </script>
 </head>
 <body>
-    <img src="img/img.jpg" id="bouncingImage" alt="Bouncing Image">
     <script>
-        const config = {
-            speed: 2.6,
-            width: '15%',
-        };
-
-        (function() {
-            'use strict';
-
-            var logo = document.getElementById('bouncingImage');
-
-            function startAnimation() {
-                var logoWidth = logo.offsetWidth;
-                var logoHeight = logo.offsetHeight;
-
-                var posX = Math.random() * (window.innerWidth - logoWidth);
-                var posY = Math.random() * (window.innerHeight - logoHeight);
-
-                var speed = config.speed;
-                var directionX = speed;
-                var directionY = speed;
-
-                function update() {
-                    posX += directionX;
-                    posY += directionY;
-
-                    if (posX + logoWidth >= window.innerWidth) {
-                        directionX = -Math.abs(directionX);
-                        posX = window.innerWidth - logoWidth;
-                    } else if (posX <= 0) {
-                        directionX = Math.abs(directionX);
-                        posX = 0;
-                    }
-
-                    if (posY + logoHeight >= window.innerHeight) {
-                        directionY = -Math.abs(directionY);
-                        posY = window.innerHeight - logoHeight;
-                    } else if (posY <= 0) {
-                        directionY = Math.abs(directionY);
-                        posY = 0;
-                    }
-
-                    logo.style.transform = 'translate(' + posX + 'px, ' + posY + 'px)';
-                    requestAnimationFrame(update);
-                }
-
-                function resizeHandler() {
-                    logoWidth = logo.offsetWidth;
-                    logoHeight = logo.offsetHeight;
-                }
-                window.addEventListener('resize', resizeHandler);
-                update();
-            }
-
-            if (logo.complete) {
-                startAnimation();
-            } else {
-                logo.addEventListener('load', startAnimation);
-            }
-
-            logo.style.position = 'absolute';
-            logo.style.width = config.width;
-            logo.style.height = 'auto';
-            logo.style.willChange = 'transform';
-
-        })();
+        document.addEventListener('DOMContentLoaded', function() {
+            new BouncingScreensaver(document.body, 'storage/samples/chad.jpg', 1);
+        });
     </script>
 </body>
 </html>
